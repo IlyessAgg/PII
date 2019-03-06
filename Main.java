@@ -1,20 +1,4 @@
 package defaultpackage;
-/*
-import com.ibm.xmi.framework.XMIFile;
-import com.ibm.xmi.framework.XMIContainer;
-import org.eclipse;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-
-import com.ibm.xmi.job.Job;
-import java.util.Collection;
-import java.util.Iterator;
- */
-
 
 import java.io.File;
 import org.w3c.dom.*;
@@ -25,25 +9,7 @@ import org.xml.sax.SAXParseException;
 import java.lang.String;
 
 public class Main {
-	/*
-	public static void test1() {
-		Collection objects = Job.readObjects("file.xmi");
-		Iterator objs = objects.iterator();
-		while (objs.hasNext()) {
-		System.out.println(objs.next());
-		}
-	}
-
-	public static void test() {
-		if (args.length != 1) {
-			System.out.println("Enter the name of an XMI document.");
-			return;
-			}
-			XMIFile file = XMIFile.load(args[0], XMIFile.DEFAULT, false);
-			XMIContainer c = new XMIContainer(file.getObjects().iterator());
-			System.out.println(c);
-	}
-	 */
+	
 	final static String CLASSES = "packagedElement";
 	final static String ATTRIBUTES = "ownedAttribute";
 	final static String OPERATIONS = "ownedOperation"; 
@@ -63,14 +29,14 @@ public class Main {
 			System.out.println("==============================");
 			listClass = doc.getElementsByTagName(CLASSES);
 
-			int totalClass = listClass.getLength();
-			System.out.println("Total Class : " + totalClass);
+			// int totalClass = listClass.getLength();
+			// System.out.println("Total Class : " + totalClass);
 			// For each class.
 			for (int i = 0; i < listClass.getLength(); i++) {
 
 				Element link = (Element) listClass.item(i);
 
-				if(link.getAttribute("xmi:type").contains( "uml:Class")/* && link.getAttribute("name").contains("DssNation")*/) {
+				if(link.getAttribute("xmi:type").contains( "uml:Class")/* && link.getAttribute("name").contains("DssSupplier")*/) {
 					System.out.println("Class= "+ link.getAttribute("name"));
 
 					listAttributes = link.getElementsByTagName(ATTRIBUTES);
@@ -90,23 +56,23 @@ public class Main {
 
 								Element linkOperation = (Element) listOperations.item(k);
 
-								if(linkOperation.getAttribute("name").contains("get"+attributeName)) {
+								if(linkOperation.getAttribute("name").toLowerCase().contains("get"+(attributeName.toLowerCase()))) {
 									String body = linkOperation.getElementsByTagName("ownedComment").item(0).getTextContent();
+									
+									if(body.indexOf("(name") == -1) break; // Not column name but fetch rows.
+									if(body.contains("fetch")) break;
+									//System.out.println(body);
+									//System.out.println("\t nameIndex: "+body.indexOf("(name"));
 									int begin = body.indexOf('"',body.indexOf("(name"));
-									int end = body.indexOf(",");
-									String columnName = body.substring(begin+1,end-1);
+									int end = body.indexOf('"',begin+1);
+									String columnName = body.substring(begin+1,end);
 									System.out.println("\t\t Column Name: "+columnName);
-									//System.out.println("\t\t- " + body);
 								}
 							}
 						}
 					}
 				}
 
-				/*
-				System.out.println("Class= "+ link.getAttribute("name"));
-				System.out.println("Type= "+ link.getAttribute("xmi:type") + "/");
-				 */
 			}
 			/*
 			listAttributes = doc.getElementsByTagName(ATTRIBUTES);
