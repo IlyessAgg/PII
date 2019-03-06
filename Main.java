@@ -9,7 +9,7 @@ import org.xml.sax.SAXParseException;
 import java.lang.String;
 
 public class Main {
-	
+
 	final static String CLASSES = "packagedElement";
 	final static String ATTRIBUTES = "ownedAttribute";
 	final static String OPERATIONS = "ownedOperation"; 
@@ -37,7 +37,18 @@ public class Main {
 				Element link = (Element) listClass.item(i);
 
 				if(link.getAttribute("xmi:type").contains( "uml:Class")/* && link.getAttribute("name").contains("DssSupplier")*/) {
-					System.out.println("Class= "+ link.getAttribute("name"));
+					System.out.println("Class: "+ link.getAttribute("name"));
+
+					String bodyClass = link.getElementsByTagName("ownedComment").item(0).getTextContent();
+
+					if(!(bodyClass.indexOf("(name") == -1 || bodyClass.contains("fetch"))) {
+						//System.out.println(body);
+						//System.out.println("\t nameIndex: "+body.indexOf("(name"));
+						int beginClass = bodyClass.indexOf('"',bodyClass.indexOf("(name"));
+						int endClass = bodyClass.indexOf('"',beginClass+1);
+						String className = bodyClass.substring(beginClass+1,endClass);
+						System.out.println("    Table Name: "+className);
+					}
 
 					listAttributes = link.getElementsByTagName(ATTRIBUTES);
 					listOperations = link.getElementsByTagName(OPERATIONS);
@@ -58,7 +69,7 @@ public class Main {
 
 								if(linkOperation.getAttribute("name").toLowerCase().contains("get"+(attributeName.toLowerCase()))) {
 									String body = linkOperation.getElementsByTagName("ownedComment").item(0).getTextContent();
-									
+
 									if(body.indexOf("(name") == -1) break; // Not column name but fetch rows.
 									if(body.contains("fetch")) break;
 									//System.out.println(body);
