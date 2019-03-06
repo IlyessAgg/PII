@@ -44,16 +44,16 @@ public class Main {
 			System.out.println(c);
 	}
 	 */
-
+	final static String CLASSES = "packagedElement";
 	final static String ATTRIBUTES = "ownedAttribute";
-
-	final static String CLASSES = "packagedElement"; 
+	final static String OPERATIONS = "ownedOperation"; 
 
 	final static String FILE_ADDRESS = "C:/Users/Ilyess/Desktop/Ilyess/ESILVCours/Projet/PII/MyWork/file.xmi";
 
 	public static void function() {
 		NodeList listClass;
 		NodeList listAttributes;
+		NodeList listOperations;
 		try {
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
@@ -65,22 +65,48 @@ public class Main {
 
 			int totalClass = listClass.getLength();
 			System.out.println("Total Class : " + totalClass);
-
+			// For each class.
 			for (int i = 0; i < listClass.getLength(); i++) {
 
 				Element link = (Element) listClass.item(i);
-				
-				if(link.getAttribute("xmi:type").contains( "uml:Class")) {
+
+				if(link.getAttribute("xmi:type").contains( "uml:Class")/* && link.getAttribute("name").contains("DssNation")*/) {
 					System.out.println("Class= "+ link.getAttribute("name"));
+
 					listAttributes = link.getElementsByTagName(ATTRIBUTES);
+					listOperations = link.getElementsByTagName(OPERATIONS);
 					int totalAttributes = listAttributes.getLength();
 					System.out.println("Attribute:"+totalAttributes);
+
+					// For each attribute.
+					for (int j = 0; j < listAttributes.getLength(); j++) {
+
+						Element linkAttribute = (Element) listAttributes.item(j);
+						String attributeName = linkAttribute.getAttribute("name");
+						if(attributeName != "") {
+							System.out.println("\t"+j+"- " + attributeName);
+
+							for (int k = 0; k < listOperations.getLength(); k++) {
+
+								Element linkOperation = (Element) listOperations.item(k);
+
+								if(linkOperation.getAttribute("name").contains("get"+attributeName)) {
+									String body = linkOperation.getElementsByTagName("ownedComment").item(0).getTextContent();
+									int begin = body.indexOf('"',body.indexOf("(name"));
+									int end = body.indexOf(",");
+									String columnName = body.substring(begin+1,end-1);
+									System.out.println("\t\t Column Name: "+columnName);
+									//System.out.println("\t\t- " + body);
+								}
+							}
+						}
+					}
 				}
-				
+
 				/*
 				System.out.println("Class= "+ link.getAttribute("name"));
 				System.out.println("Type= "+ link.getAttribute("xmi:type") + "/");
-				*/
+				 */
 			}
 			/*
 			listAttributes = doc.getElementsByTagName(ATTRIBUTES);
@@ -96,7 +122,7 @@ public class Main {
 				System.out.println("Attribute= " + link.getAttribute("name"));
 
 			}
-			*/
+			 */
 
 		} catch (SAXParseException err) {
 			System.out.println("** Parsing error" + ", line "
