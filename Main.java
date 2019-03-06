@@ -47,7 +47,7 @@ public class Main {
 
 	final static String ATTRIBUTES = "ownedAttribute";
 
-	final static String CLASSES = "UML:Class"; 
+	final static String CLASSES = "packagedElement"; 
 
 	final static String FILE_ADDRESS = "C:/Users/Ilyess/Desktop/Ilyess/ESILVCours/Projet/PII/MyWork/file.xmi";
 
@@ -69,11 +69,20 @@ public class Main {
 			for (int i = 0; i < listClass.getLength(); i++) {
 
 				Element link = (Element) listClass.item(i);
-
+				
+				if(link.getAttribute("xmi:type").contains( "uml:Class")) {
+					System.out.println("Class= "+ link.getAttribute("name"));
+					listAttributes = link.getElementsByTagName(ATTRIBUTES);
+					int totalAttributes = listAttributes.getLength();
+					System.out.println("Attribute:"+totalAttributes);
+				}
+				
+				/*
 				System.out.println("Class= "+ link.getAttribute("name"));
-
+				System.out.println("Type= "+ link.getAttribute("xmi:type") + "/");
+				*/
 			}
-
+			/*
 			listAttributes = doc.getElementsByTagName(ATTRIBUTES);
 			int totalAttributes = listAttributes.getLength();
 			System.out.println("Attribute:"+totalAttributes);
@@ -87,7 +96,7 @@ public class Main {
 				System.out.println("Attribute= " + link.getAttribute("name"));
 
 			}
-
+			*/
 
 		} catch (SAXParseException err) {
 			System.out.println("** Parsing error" + ", line "
