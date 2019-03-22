@@ -1,12 +1,24 @@
 package defaultpackage;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.w3c.dom.*;
+
+import javax.sql.ConnectionPoolDataSource;
+import javax.sql.DataSource;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import java.lang.String;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Main {
 
@@ -60,8 +72,16 @@ public class Main {
 
 						Element linkAttribute = (Element) listAttributes.item(j);
 						String attributeName = linkAttribute.getAttribute("name");
+
 						if(attributeName != "") {
 							System.out.println("\t"+j+"- " + attributeName);
+
+							Element linkType = (Element) linkAttribute.getElementsByTagName("type").item(0);
+							if(linkType != null) {
+								String attributeType = linkType.getAttribute("href");
+								attributeType = attributeType.substring(attributeType.indexOf("#")+1);
+								System.out.println("\t\t Type: " + attributeType);
+							}
 
 							for (int k = 0; k < listOperations.getLength(); k++) {
 
@@ -116,10 +136,54 @@ public class Main {
 
 	}
 
+	public static void test() {
+		String url = "jdbc:mysql://relational.fit.cvut.cz:3306/tpcd";
+		String username = "guest";
+		String password = "relational";
+		Connection myConn=null;
+		Statement myStmt = null;
+		ResultSet myRs= null;
+		try
+		{
+			myConn = DriverManager.getConnection(url, username, password);
+			myStmt= myConn.createStatement();
+			String sql= "Select n_nationkey,n_name,n_comment from dss_nation";
+			myRs = myStmt.executeQuery(sql);
+			JSONArray jArray = new JSONArray();
+			while (myRs.next())
+			{
+				String key_json = myRs.getString("n_nationkey");
+				String  name_json = myRs.getString("n_name");
+				String comment_json = myRs.getString("n_comment");
+				//String id_json=result.getString("demo");
+				JSONObject jObj = new JSONObject();
+				jObj.put("id", key_json);
+				jObj.put("name", name_json);
+				jObj.put("comment", comment_json);
+				//jObj.put("name", name_json);
+				jArray.put(jObj);
+			}
+			System.out.println("============ Array ==============");
+			try (FileWriter file = new FileWriter("C:/Users/Ilyess/Desktop/nation.json")) {
+				 
+	            file.write(jArray.toString());
+	            file.flush();
+	 
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+			System.out.println("============ END ==============");
+			
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+	}
+
 	public static void main(String[] args) {
-		//test();
-		//test1();
-		function();
+		//function();
+		test();
 	}
 
 }
