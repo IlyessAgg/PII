@@ -19,6 +19,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -32,6 +34,8 @@ public class Main {
 		NodeList listClass;
 		NodeList listAttributes;
 		NodeList listOperations;
+		String SQLtable;
+		List<String> SQLattributes;
 		try {
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
@@ -45,6 +49,8 @@ public class Main {
 			// System.out.println("Total Class : " + totalClass);
 			// For each class.
 			for (int i = 0; i < listClass.getLength(); i++) {
+				SQLtable = "";
+				SQLattributes = new ArrayList<String>(); 
 
 				Element link = (Element) listClass.item(i);
 
@@ -59,6 +65,7 @@ public class Main {
 						int beginClass = bodyClass.indexOf('"',bodyClass.indexOf("(name"));
 						int endClass = bodyClass.indexOf('"',beginClass+1);
 						String className = bodyClass.substring(beginClass+1,endClass);
+						SQLtable = className;
 						System.out.println("    Table Name: "+className);
 					}
 
@@ -97,13 +104,64 @@ public class Main {
 									int begin = body.indexOf('"',body.indexOf("(name"));
 									int end = body.indexOf('"',begin+1);
 									String columnName = body.substring(begin+1,end);
+									SQLattributes.add(columnName);
 									System.out.println("\t\t Column Name: "+columnName);
 								}
 							}
 						}
 					}
-				}
 
+
+					// JSON creation
+
+					String url = "jdbc:mysql://relational.fit.cvut.cz:3306/tpcd";
+					String username = "guest";
+					String password = "relational";
+					String columns = "";
+					Connection myConn=null;
+					Statement myStmt = null;
+					ResultSet myRs= null;
+					for(String column : SQLattributes) {
+						if(SQLattributes.indexOf(column) == SQLattributes.size()-1) columns += column;
+						else columns += column + ",";
+					}
+
+					try
+					{
+						System.out.println("Fetching data from SQL for " + SQLtable + " table (this might take some time).");
+						myConn = DriverManager.getConnection(url, username, password);
+						myStmt= myConn.createStatement();
+						String sql= "Select " + columns + " from " + SQLtable;
+						myRs = myStmt.executeQuery(sql);
+						JSONArray jArray = new JSONArray();
+						while (myRs.next())
+						{
+							JSONObject jObj = new JSONObject();
+							for(String column : SQLattributes) {
+								String key_json = myRs.getString(column);
+								jObj.put(column, key_json);
+							}
+							jArray.put(jObj);
+						}
+						System.out.println("Starting file creation.");
+						try (FileWriter file = new FileWriter("C:/Users/Ilyess/Desktop/Ilyess/ESILVCours/Projet/PII/MyWork/filesCreated/"+SQLtable+".json")) {
+
+							file.write(jArray.toString());
+							file.flush();
+
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						System.out.println("File creation ended.");
+
+					}
+					catch(Exception e)
+					{
+						System.out.println(e);
+					}
+
+
+				}
 			}
 			/*
 			listAttributes = doc.getElementsByTagName(ATTRIBUTES);
@@ -165,15 +223,15 @@ public class Main {
 			}
 			System.out.println("============ Array ==============");
 			try (FileWriter file = new FileWriter("C:/Users/Ilyess/Desktop/nation.json")) {
-				 
-	            file.write(jArray.toString());
-	            file.flush();
-	 
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
+
+				file.write(jArray.toString());
+				file.flush();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			System.out.println("============ END ==============");
-			
+
 		}
 		catch(Exception e)
 		{
@@ -182,8 +240,8 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		//function();
-		test();
+		function();
+		//test();
 	}
 
 }
