@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 13 nov. 2018 11:01:03 by Hibernate Tools 5.2.11.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="tpcd" dynamic-insert="false" dynamic-update="false" mutable="true" name="net.code.java.hibernate.DssPart" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="dss_part">
+        <id name="PPartkey" type="int">
+            <column name="p_partkey"/>
+            <generator class="assigned"/>
+        </id>
+        <property generated="never" lazy="false" name="PName" optimistic-lock="true" type="string" unique="false">
+            <column length="55" name="p_name" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="PMfgr" optimistic-lock="true" type="string" unique="false">
+            <column length="25" name="p_mfgr" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="PBrand" optimistic-lock="true" type="string" unique="false">
+            <column length="10" name="p_brand" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="PType" optimistic-lock="true" type="string" unique="false">
+            <column length="25" name="p_type" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="PSize" optimistic-lock="true" type="int" unique="false">
+            <column name="p_size" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="PContainer" optimistic-lock="true" type="string" unique="false">
+            <column length="10" name="p_container" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="PRetailprice" optimistic-lock="true" type="double" unique="false">
+            <column name="p_retailprice" not-null="true" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="PComment" optimistic-lock="true" type="string" unique="false">
+            <column length="23" name="p_comment" not-null="true"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="dssPartsupps" optimistic-lock="true" sort="unsorted" table="dss_partsupp">
+            <key on-delete="noaction">
+                <column name="ps_partkey" not-null="true"/>
+            </key>
+            <one-to-many class="net.code.java.hibernate.DssPartsupp" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

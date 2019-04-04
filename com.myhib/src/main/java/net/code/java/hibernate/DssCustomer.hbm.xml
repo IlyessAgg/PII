@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 13 nov. 2018 11:01:03 by Hibernate Tools 5.2.11.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="tpcd" dynamic-insert="false" dynamic-update="false" mutable="true" name="net.code.java.hibernate.DssCustomer" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="dss_customer">
+        <id name="CCustkey" type="int">
+            <column name="c_custkey"/>
+            <generator class="assigned"/>
+        </id>
+        <many-to-one class="net.code.java.hibernate.DssNation" embed-xml="true" fetch="select" insert="true" name="dssNation" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="c_nationkey" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="CName" optimistic-lock="true" type="string" unique="false">
+            <column length="25" name="c_name" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="CAddress" optimistic-lock="true" type="string" unique="false">
+            <column length="40" name="c_address" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="CPhone" optimistic-lock="true" type="string" unique="false">
+            <column length="15" name="c_phone" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="CAcctbal" optimistic-lock="true" type="double" unique="false">
+            <column name="c_acctbal" not-null="true" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="CMktsegment" optimistic-lock="true" type="string" unique="false">
+            <column length="10" name="c_mktsegment" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="CComment" optimistic-lock="true" type="string" unique="false">
+            <column length="117" name="c_comment"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="dssOrders" optimistic-lock="true" sort="unsorted" table="dss_order">
+            <key on-delete="noaction">
+                <column name="o_custkey" not-null="true"/>
+            </key>
+            <one-to-many class="net.code.java.hibernate.DssOrder" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

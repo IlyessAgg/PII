@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 13 nov. 2018 11:01:03 by Hibernate Tools 5.2.11.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="tpcd" dynamic-insert="false" dynamic-update="false" mutable="true" name="net.code.java.hibernate.DssOrder" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="dss_order">
+        <id name="OOrderkey" type="long">
+            <column name="o_orderkey" precision="18" scale="0"/>
+            <generator class="assigned"/>
+        </id>
+        <many-to-one class="net.code.java.hibernate.DssCustomer" embed-xml="true" fetch="select" insert="true" name="dssCustomer" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="o_custkey" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="OOrderstatus" optimistic-lock="true" type="char" unique="false">
+            <column length="1" name="o_orderstatus" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="OTotalprice" optimistic-lock="true" type="double" unique="false">
+            <column name="o_totalprice" not-null="true" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="OOrderdate" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="o_orderdate"/>
+        </property>
+        <property generated="never" lazy="false" name="OOrderpriority" optimistic-lock="true" type="string" unique="false">
+            <column length="15" name="o_orderpriority" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="OClerk" optimistic-lock="true" type="string" unique="false">
+            <column length="15" name="o_clerk" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="OShippriority" optimistic-lock="true" type="int" unique="false">
+            <column name="o_shippriority" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="OComment" optimistic-lock="true" type="string" unique="false">
+            <column length="79" name="o_comment"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="dssLineitems" optimistic-lock="true" sort="unsorted" table="dss_lineitem">
+            <key on-delete="noaction">
+                <column name="l_orderkey" not-null="true" precision="18" scale="0"/>
+            </key>
+            <one-to-many class="net.code.java.hibernate.DssLineitem" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

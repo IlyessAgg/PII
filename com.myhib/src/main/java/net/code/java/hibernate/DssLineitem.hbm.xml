@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 13 nov. 2018 11:01:03 by Hibernate Tools 5.2.11.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="tpcd" dynamic-insert="false" dynamic-update="false" mutable="true" name="net.code.java.hibernate.DssLineitem" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="dss_lineitem">
+        <composite-id class="net.code.java.hibernate.DssLineitemId" mapped="false" name="id" unsaved-value="undefined">
+            <key-property name="LOrderkey" type="long">
+                <column name="l_orderkey" precision="18" scale="0"/>
+            </key-property>
+            <key-property name="LLinenumber" type="int">
+                <column name="l_linenumber"/>
+            </key-property>
+        </composite-id>
+        <many-to-one class="net.code.java.hibernate.DssOrder" embed-xml="true" fetch="select" insert="false" name="dssOrder" not-found="exception" optimistic-lock="true" unique="false" update="false">
+            <column name="l_orderkey" not-null="true" precision="18" scale="0"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="LPartkey" optimistic-lock="true" type="int" unique="false">
+            <column name="l_partkey" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="LSuppkey" optimistic-lock="true" type="int" unique="false">
+            <column name="l_suppkey" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="LQuantity" optimistic-lock="true" type="double" unique="false">
+            <column name="l_quantity" not-null="true" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="LExtendedprice" optimistic-lock="true" type="double" unique="false">
+            <column name="l_extendedprice" not-null="true" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="LDiscount" optimistic-lock="true" type="double" unique="false">
+            <column name="l_discount" not-null="true" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="LTax" optimistic-lock="true" type="double" unique="false">
+            <column name="l_tax" not-null="true" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="LReturnflag" optimistic-lock="true" type="char" unique="false">
+            <column length="1" name="l_returnflag" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="LLinestatus" optimistic-lock="true" type="char" unique="false">
+            <column length="1" name="l_linestatus" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="LShipdate" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="l_shipdate"/>
+        </property>
+        <property generated="never" lazy="false" name="LCommitdate" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="l_commitdate"/>
+        </property>
+        <property generated="never" lazy="false" name="LReceiptdate" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="l_receiptdate"/>
+        </property>
+        <property generated="never" lazy="false" name="LShipinstruct" optimistic-lock="true" type="string" unique="false">
+            <column length="25" name="l_shipinstruct" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="LShipmode" optimistic-lock="true" type="string" unique="false">
+            <column length="10" name="l_shipmode" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="LComment" optimistic-lock="true" type="string" unique="false">
+            <column length="44" name="l_comment"/>
+        </property>
+        <one-to-one class="net.code.java.hibernate.DssPartsupp" constrained="false" embed-xml="true" name="dssPartsupp"/>
+    </class>
+</hibernate-mapping>

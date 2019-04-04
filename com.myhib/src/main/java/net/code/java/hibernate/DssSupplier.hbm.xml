@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 13 nov. 2018 11:01:03 by Hibernate Tools 5.2.11.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="tpcd" dynamic-insert="false" dynamic-update="false" mutable="true" name="net.code.java.hibernate.DssSupplier" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="dss_supplier">
+        <id name="SSuppkey" type="int">
+            <column name="s_suppkey"/>
+            <generator class="assigned"/>
+        </id>
+        <many-to-one class="net.code.java.hibernate.DssNation" embed-xml="true" fetch="select" insert="true" name="dssNation" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="s_nationkey" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="SName" optimistic-lock="true" type="string" unique="false">
+            <column length="25" name="s_name" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="SAddress" optimistic-lock="true" type="string" unique="false">
+            <column length="40" name="s_address" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="SPhone" optimistic-lock="true" type="string" unique="false">
+            <column length="15" name="s_phone" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="SAcctbal" optimistic-lock="true" type="double" unique="false">
+            <column name="s_acctbal" not-null="true" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="SComment" optimistic-lock="true" type="string" unique="false">
+            <column length="101" name="s_comment" not-null="true"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="dssPartsupps" optimistic-lock="true" sort="unsorted" table="dss_partsupp">
+            <key on-delete="noaction">
+                <column name="ps_suppkey" not-null="true"/>
+            </key>
+            <one-to-many class="net.code.java.hibernate.DssPartsupp" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

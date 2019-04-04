@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 13 nov. 2018 11:01:03 by Hibernate Tools 5.2.11.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="tpcd" dynamic-insert="false" dynamic-update="false" mutable="true" name="net.code.java.hibernate.DssNation" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="dss_nation">
+        <id name="NNationkey" type="int">
+            <column name="n_nationkey"/>
+            <generator class="assigned"/>
+        </id>
+        <many-to-one class="net.code.java.hibernate.DssRegion" embed-xml="true" fetch="select" insert="true" name="dssRegion" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="n_regionkey" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="NName" optimistic-lock="true" type="string" unique="false">
+            <column length="25" name="n_name" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="NComment" optimistic-lock="true" type="string" unique="false">
+            <column length="152" name="n_comment"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="dssCustomers" optimistic-lock="true" sort="unsorted" table="dss_customer">
+            <key on-delete="noaction">
+                <column name="c_nationkey" not-null="true"/>
+            </key>
+            <one-to-many class="net.code.java.hibernate.DssCustomer" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="dssSuppliers" optimistic-lock="true" sort="unsorted" table="dss_supplier">
+            <key on-delete="noaction">
+                <column name="s_nationkey" not-null="true"/>
+            </key>
+            <one-to-many class="net.code.java.hibernate.DssSupplier" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

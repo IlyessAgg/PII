@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 13 nov. 2018 11:01:03 by Hibernate Tools 5.2.11.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="tpcd" dynamic-insert="false" dynamic-update="false" mutable="true" name="net.code.java.hibernate.DssPartsupp" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="dss_partsupp">
+        <composite-id class="net.code.java.hibernate.DssPartsuppId" mapped="false" name="id" unsaved-value="undefined">
+            <key-property name="psPartkey" type="int">
+                <column name="ps_partkey"/>
+            </key-property>
+            <key-property name="psSuppkey" type="int">
+                <column name="ps_suppkey"/>
+            </key-property>
+        </composite-id>
+        <one-to-one class="net.code.java.hibernate.DssLineitem" constrained="true" embed-xml="true" name="dssLineitem"/>
+        <many-to-one class="net.code.java.hibernate.DssPart" embed-xml="true" fetch="select" insert="false" name="dssPart" not-found="exception" optimistic-lock="true" unique="false" update="false">
+            <column name="ps_partkey" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="net.code.java.hibernate.DssSupplier" embed-xml="true" fetch="select" insert="false" name="dssSupplier" not-found="exception" optimistic-lock="true" unique="false" update="false">
+            <column name="ps_suppkey" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="psAvailqty" optimistic-lock="true" type="int" unique="false">
+            <column name="ps_availqty" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="psSupplycost" optimistic-lock="true" type="double" unique="false">
+            <column name="ps_supplycost" not-null="true" precision="22" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="psComment" optimistic-lock="true" type="string" unique="false">
+            <column length="199" name="ps_comment"/>
+        </property>
+    </class>
+</hibernate-mapping>
