@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 8 nov. 2018 14:18:49 by Hibernate Tools 5.3.6.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="tpcc" dynamic-insert="false" dynamic-update="false" mutable="true" name="net.codejava.hibernate.CStock" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="C_Stock">
+        <composite-id class="net.codejava.hibernate.CStockId" mapped="false" name="id" unsaved-value="undefined">
+            <key-property name="SIId" type="int">
+                <column name="s_i_id"/>
+            </key-property>
+            <key-property name="SWId" type="int">
+                <column name="s_w_id"/>
+            </key-property>
+        </composite-id>
+        <many-to-one class="net.codejava.hibernate.CItem" embed-xml="true" fetch="select" insert="false" name="CItem" not-found="exception" optimistic-lock="true" unique="false" update="false">
+            <column name="s_i_id" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="net.codejava.hibernate.CWarehouse" embed-xml="true" fetch="select" insert="false" name="CWarehouse" not-found="exception" optimistic-lock="true" unique="false" update="false">
+            <column name="s_w_id" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="SQuantity" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="s_quantity"/>
+        </property>
+        <property generated="never" lazy="false" name="SDist01" optimistic-lock="true" type="string" unique="false">
+            <column length="24" name="s_dist_01"/>
+        </property>
+        <property generated="never" lazy="false" name="SDist02" optimistic-lock="true" type="string" unique="false">
+            <column length="24" name="s_dist_02"/>
+        </property>
+        <property generated="never" lazy="false" name="SDist03" optimistic-lock="true" type="string" unique="false">
+            <column length="24" name="s_dist_03"/>
+        </property>
+        <property generated="never" lazy="false" name="SDist04" optimistic-lock="true" type="string" unique="false">
+            <column length="24" name="s_dist_04"/>
+        </property>
+        <property generated="never" lazy="false" name="SDist05" optimistic-lock="true" type="string" unique="false">
+            <column length="24" name="s_dist_05"/>
+        </property>
+        <property generated="never" lazy="false" name="SDist06" optimistic-lock="true" type="string" unique="false">
+            <column length="24" name="s_dist_06"/>
+        </property>
+        <property generated="never" lazy="false" name="SDist07" optimistic-lock="true" type="string" unique="false">
+            <column length="24" name="s_dist_07"/>
+        </property>
+        <property generated="never" lazy="false" name="SDist08" optimistic-lock="true" type="string" unique="false">
+            <column length="24" name="s_dist_08"/>
+        </property>
+        <property generated="never" lazy="false" name="SDist09" optimistic-lock="true" type="string" unique="false">
+            <column length="24" name="s_dist_09"/>
+        </property>
+        <property generated="never" lazy="false" name="SDist10" optimistic-lock="true" type="string" unique="false">
+            <column length="24" name="s_dist_10"/>
+        </property>
+        <property generated="never" lazy="false" name="SYtd" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="s_ytd"/>
+        </property>
+        <property generated="never" lazy="false" name="SOrderCnt" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="s_order_cnt"/>
+        </property>
+        <property generated="never" lazy="false" name="SRemoteCnt" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="s_remote_cnt"/>
+        </property>
+        <property generated="never" lazy="false" name="SData" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="s_data"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="COrderLines" optimistic-lock="true" sort="unsorted" table="C_Order_Line">
+            <key on-delete="noaction">
+                <column name="ol_i_id"/>
+                <column name="ol_supply_w_id"/>
+            </key>
+            <one-to-many class="net.codejava.hibernate.COrderLine" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

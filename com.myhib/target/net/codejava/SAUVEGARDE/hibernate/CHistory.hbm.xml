@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 13 nov. 2018 10:53:07 by Hibernate Tools 5.2.11.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="tpcc" dynamic-insert="false" dynamic-update="false" mutable="true" name="net.code.java.hibernate.CHistory" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="C_History">
+        <composite-id class="net.code.java.hibernate.CHistoryId" mapped="false" name="id" unsaved-value="undefined">
+            <key-property name="HCId" type="java.lang.Integer">
+                <column name="h_c_id"/>
+            </key-property>
+            <key-property name="HCDId" type="java.lang.Integer">
+                <column name="h_c_d_id"/>
+            </key-property>
+            <key-property name="HCWId" type="java.lang.Integer">
+                <column name="h_c_w_id"/>
+            </key-property>
+            <key-property name="HDId" type="java.lang.Integer">
+                <column name="h_d_id"/>
+            </key-property>
+            <key-property name="HWId" type="java.lang.Integer">
+                <column name="h_w_id"/>
+            </key-property>
+            <key-property name="HDate" type="timestamp">
+                <column length="19" name="h_date"/>
+            </key-property>
+            <key-property name="HAmount" type="java.lang.Float">
+                <column name="h_amount" precision="12" scale="0"/>
+            </key-property>
+            <key-property name="HData" type="string">
+                <column length="24" name="h_data"/>
+            </key-property>
+        </composite-id>
+        <many-to-one class="net.code.java.hibernate.CCustomer" embed-xml="true" fetch="select" insert="false" name="CCustomer" not-found="exception" optimistic-lock="true" unique="false" update="false">
+            <column name="h_c_id"/>
+            <column name="h_c_d_id"/>
+            <column name="h_c_w_id"/>
+        </many-to-one>
+        <many-to-one class="net.code.java.hibernate.CDistrict" embed-xml="true" fetch="select" insert="false" name="CDistrict" not-found="exception" optimistic-lock="true" unique="false" update="false">
+            <column name="h_d_id"/>
+            <column name="h_w_id"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 8 nov. 2018 14:18:49 by Hibernate Tools 5.3.6.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="tpcc" dynamic-insert="false" dynamic-update="false" mutable="true" name="net.codejava.hibernate.COrderLine" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="C_Order_Line">
+        <composite-id class="net.codejava.hibernate.COrderLineId" mapped="false" name="id" unsaved-value="undefined">
+            <key-property name="olOId" type="int">
+                <column name="ol_o_id"/>
+            </key-property>
+            <key-property name="olDId" type="int">
+                <column name="ol_d_id"/>
+            </key-property>
+            <key-property name="olWId" type="int">
+                <column name="ol_w_id"/>
+            </key-property>
+            <key-property name="olNumber" type="int">
+                <column name="ol_number"/>
+            </key-property>
+        </composite-id>
+        <many-to-one class="net.codejava.hibernate.COrder" embed-xml="true" fetch="select" insert="false" name="COrder" not-found="exception" optimistic-lock="true" unique="false" update="false">
+            <column name="ol_o_id" not-null="true"/>
+            <column name="ol_d_id" not-null="true"/>
+            <column name="ol_w_id" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="net.codejava.hibernate.CStock" embed-xml="true" fetch="select" insert="true" name="CStock" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="ol_i_id"/>
+            <column name="ol_supply_w_id"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="olDeliveryD" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="ol_delivery_d"/>
+        </property>
+        <property generated="never" lazy="false" name="olQuantity" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="ol_quantity"/>
+        </property>
+        <property generated="never" lazy="false" name="olAmount" optimistic-lock="true" type="java.lang.Float" unique="false">
+            <column name="ol_amount" precision="12" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="olDistInfo" optimistic-lock="true" type="string" unique="false">
+            <column length="24" name="ol_dist_info"/>
+        </property>
+    </class>
+</hibernate-mapping>

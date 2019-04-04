@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 8 nov. 2018 14:18:49 by Hibernate Tools 5.3.6.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="tpcc" dynamic-insert="false" dynamic-update="false" mutable="true" name="net.codejava.hibernate.CItem" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="C_Item">
+        <id name="IId" type="int">
+            <column name="i_id"/>
+            <generator class="assigned"/>
+        </id>
+        <property generated="never" lazy="false" name="IImId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="i_im_id"/>
+        </property>
+        <property generated="never" lazy="false" name="IName" optimistic-lock="true" type="string" unique="false">
+            <column length="24" name="i_name"/>
+        </property>
+        <property generated="never" lazy="false" name="IPrice" optimistic-lock="true" type="java.lang.Float" unique="false">
+            <column name="i_price" precision="12" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="IData" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="i_data"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="CStocks" optimistic-lock="true" sort="unsorted" table="C_Stock">
+            <key on-delete="noaction">
+                <column name="s_i_id" not-null="true"/>
+            </key>
+            <one-to-many class="net.codejava.hibernate.CStock" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

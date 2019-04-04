@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 8 nov. 2018 14:18:49 by Hibernate Tools 5.3.6.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="tpcc" dynamic-insert="false" dynamic-update="false" mutable="true" name="net.codejava.hibernate.CCustomer" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="C_Customer">
+        <composite-id class="net.codejava.hibernate.CCustomerId" mapped="false" name="id" unsaved-value="undefined">
+            <key-property name="CId" type="int">
+                <column name="c_id"/>
+            </key-property>
+            <key-property name="CDId" type="int">
+                <column name="c_d_id"/>
+            </key-property>
+            <key-property name="CWId" type="int">
+                <column name="c_w_id"/>
+            </key-property>
+        </composite-id>
+        <many-to-one class="net.codejava.hibernate.CDistrict" embed-xml="true" fetch="select" insert="false" name="CDistrict" not-found="exception" optimistic-lock="true" unique="false" update="false">
+            <column name="c_d_id" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="CFirst" optimistic-lock="true" type="string" unique="false">
+            <column length="16" name="c_first"/>
+        </property>
+        <property generated="never" lazy="false" name="CMiddle" optimistic-lock="true" type="string" unique="false">
+            <column length="2" name="c_middle"/>
+        </property>
+        <property generated="never" lazy="false" name="CLast" optimistic-lock="true" type="string" unique="false">
+            <column length="16" name="c_last"/>
+        </property>
+        <property generated="never" lazy="false" name="CStreet1" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="c_street_1"/>
+        </property>
+        <property generated="never" lazy="false" name="CStreet2" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="c_street_2"/>
+        </property>
+        <property generated="never" lazy="false" name="CCity" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="c_city"/>
+        </property>
+        <property generated="never" lazy="false" name="CState" optimistic-lock="true" type="string" unique="false">
+            <column length="2" name="c_state"/>
+        </property>
+        <property generated="never" lazy="false" name="CZip" optimistic-lock="true" type="string" unique="false">
+            <column length="9" name="c_zip"/>
+        </property>
+        <property generated="never" lazy="false" name="CPhone" optimistic-lock="true" type="string" unique="false">
+            <column length="16" name="c_phone"/>
+        </property>
+        <property generated="never" lazy="false" name="CSince" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="c_since"/>
+        </property>
+        <property generated="never" lazy="false" name="CCredit" optimistic-lock="true" type="string" unique="false">
+            <column length="2" name="c_credit"/>
+        </property>
+        <property generated="never" lazy="false" name="CCreditLim" optimistic-lock="true" type="java.lang.Float" unique="false">
+            <column name="c_credit_lim" precision="12" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="CDiscount" optimistic-lock="true" type="java.lang.Float" unique="false">
+            <column name="c_discount" precision="12" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="CBalance" optimistic-lock="true" type="java.lang.Float" unique="false">
+            <column name="c_balance" precision="12" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="CYtdPayment" optimistic-lock="true" type="java.lang.Float" unique="false">
+            <column name="c_ytd_payment" precision="12" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="CPaymentCnt" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="c_payment_cnt"/>
+        </property>
+        <property generated="never" lazy="false" name="CDeliveryCnt" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="c_delivery_cnt"/>
+        </property>
+        <property generated="never" lazy="false" name="CData1" optimistic-lock="true" type="string" unique="false">
+            <column length="250" name="c_data1"/>
+        </property>
+        <property generated="never" lazy="false" name="CData2" optimistic-lock="true" type="string" unique="false">
+            <column length="250" name="c_data2"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="COrders" optimistic-lock="true" sort="unsorted" table="C_Order">
+            <key on-delete="noaction">
+                <column name="o_d_id" not-null="true"/>
+                <column name="o_c_id"/>
+                <column name="o_w_id" not-null="true"/>
+            </key>
+            <one-to-many class="net.codejava.hibernate.COrder" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="CHistories" optimistic-lock="true" sort="unsorted" table="C_History">
+            <key on-delete="noaction">
+                <column name="h_c_id"/>
+                <column name="h_c_d_id"/>
+                <column name="h_c_w_id"/>
+            </key>
+            <one-to-many class="net.codejava.hibernate.CHistory" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

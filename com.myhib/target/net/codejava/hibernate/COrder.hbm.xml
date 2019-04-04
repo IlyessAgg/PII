@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 8 nov. 2018 14:18:49 by Hibernate Tools 5.3.6.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="tpcc" dynamic-insert="false" dynamic-update="false" mutable="true" name="net.codejava.hibernate.COrder" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="C_Order">
+        <composite-id class="net.codejava.hibernate.COrderId" mapped="false" name="id" unsaved-value="undefined">
+            <key-property name="OId" type="int">
+                <column name="o_id"/>
+            </key-property>
+            <key-property name="ODId" type="int">
+                <column name="o_d_id"/>
+            </key-property>
+            <key-property name="OWId" type="int">
+                <column name="o_w_id"/>
+            </key-property>
+        </composite-id>
+        <many-to-one class="net.codejava.hibernate.CCustomer" embed-xml="true" fetch="select" insert="false" name="CCustomer" not-found="exception" optimistic-lock="true" unique="false" update="false">
+            <column name="o_d_id" not-null="true"/>
+            <column name="o_c_id"/>
+            <column name="o_w_id" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="OEntryD" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="o_entry_d"/>
+        </property>
+        <property generated="never" lazy="false" name="OCarrierId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="o_carrier_id"/>
+        </property>
+        <property generated="never" lazy="false" name="OOlCnt" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="o_ol_cnt"/>
+        </property>
+        <property generated="never" lazy="false" name="OAllLocal" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="o_all_local"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="COrderLines" optimistic-lock="true" sort="unsorted" table="C_Order_Line">
+            <key on-delete="noaction">
+                <column name="ol_o_id" not-null="true"/>
+                <column name="ol_d_id" not-null="true"/>
+                <column name="ol_w_id" not-null="true"/>
+            </key>
+            <one-to-many class="net.codejava.hibernate.COrderLine" embed-xml="true" not-found="exception"/>
+        </set>
+        <one-to-one class="net.codejava.hibernate.CNewOrder" constrained="false" embed-xml="true" name="CNewOrder"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 8 nov. 2018 14:18:49 by Hibernate Tools 5.3.6.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="tpcc" dynamic-insert="false" dynamic-update="false" mutable="true" name="net.codejava.hibernate.CDistrict" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="C_District">
+        <composite-id class="net.codejava.hibernate.CDistrictId" mapped="false" name="id" unsaved-value="undefined">
+            <key-property name="DId" type="int">
+                <column name="d_id"/>
+            </key-property>
+            <key-property name="DWId" type="int">
+                <column name="d_w_id"/>
+            </key-property>
+        </composite-id>
+        <many-to-one class="net.codejava.hibernate.CWarehouse" embed-xml="true" fetch="select" insert="false" name="CWarehouse" not-found="exception" optimistic-lock="true" unique="false" update="false">
+            <column name="d_w_id" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="DName" optimistic-lock="true" type="string" unique="false">
+            <column length="10" name="d_name"/>
+        </property>
+        <property generated="never" lazy="false" name="DStreet1" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="d_street_1"/>
+        </property>
+        <property generated="never" lazy="false" name="DStreet2" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="d_street_2"/>
+        </property>
+        <property generated="never" lazy="false" name="DCity" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="d_city"/>
+        </property>
+        <property generated="never" lazy="false" name="DState" optimistic-lock="true" type="string" unique="false">
+            <column length="2" name="d_state"/>
+        </property>
+        <property generated="never" lazy="false" name="DZip" optimistic-lock="true" type="string" unique="false">
+            <column length="9" name="d_zip"/>
+        </property>
+        <property generated="never" lazy="false" name="DTax" optimistic-lock="true" type="java.lang.Float" unique="false">
+            <column name="d_tax" precision="12" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="DYtd" optimistic-lock="true" type="java.lang.Float" unique="false">
+            <column name="d_ytd" precision="12" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="DNextOId" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="d_next_o_id"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="CCustomers" optimistic-lock="true" sort="unsorted" table="C_Customer">
+            <key on-delete="noaction">
+                <column name="c_d_id" not-null="true"/>
+            </key>
+            <one-to-many class="net.codejava.hibernate.CCustomer" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="CHistories" optimistic-lock="true" sort="unsorted" table="C_History">
+            <key on-delete="noaction">
+                <column name="h_d_id"/>
+                <column name="h_w_id"/>
+            </key>
+            <one-to-many class="net.codejava.hibernate.CHistory" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

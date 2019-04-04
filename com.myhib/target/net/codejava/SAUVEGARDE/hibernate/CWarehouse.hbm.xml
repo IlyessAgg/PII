@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 13 nov. 2018 10:53:07 by Hibernate Tools 5.2.11.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="tpcc" dynamic-insert="false" dynamic-update="false" mutable="true" name="net.code.java.hibernate.CWarehouse" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="C_Warehouse">
+        <id name="WId" type="int">
+            <column name="w_id"/>
+            <generator class="assigned"/>
+        </id>
+        <property generated="never" lazy="false" name="WName" optimistic-lock="true" type="string" unique="false">
+            <column length="10" name="w_name"/>
+        </property>
+        <property generated="never" lazy="false" name="WStreet1" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="w_street_1"/>
+        </property>
+        <property generated="never" lazy="false" name="WStreet2" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="w_street_2"/>
+        </property>
+        <property generated="never" lazy="false" name="WCity" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="w_city"/>
+        </property>
+        <property generated="never" lazy="false" name="WState" optimistic-lock="true" type="string" unique="false">
+            <column length="2" name="w_state"/>
+        </property>
+        <property generated="never" lazy="false" name="WZip" optimistic-lock="true" type="string" unique="false">
+            <column length="9" name="w_zip"/>
+        </property>
+        <property generated="never" lazy="false" name="WTax" optimistic-lock="true" type="java.lang.Float" unique="false">
+            <column name="w_tax" precision="12" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="WYtd" optimistic-lock="true" type="java.lang.Float" unique="false">
+            <column name="w_ytd" precision="12" scale="0"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="CStocks" optimistic-lock="true" sort="unsorted" table="C_Stock">
+            <key on-delete="noaction">
+                <column name="s_w_id" not-null="true"/>
+            </key>
+            <one-to-many class="net.code.java.hibernate.CStock" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="CDistricts" optimistic-lock="true" sort="unsorted" table="C_District">
+            <key on-delete="noaction">
+                <column name="d_w_id" not-null="true"/>
+            </key>
+            <one-to-many class="net.code.java.hibernate.CDistrict" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>
