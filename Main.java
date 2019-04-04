@@ -45,8 +45,6 @@ public class Main {
 			System.out.println("==============================");
 			listClass = doc.getElementsByTagName(CLASSES);
 
-			// int totalClass = listClass.getLength();
-			// System.out.println("Total Class : " + totalClass);
 			// For each class.
 			for (int i = 0; i < listClass.getLength(); i++) {
 				SQLtable = "";
@@ -60,8 +58,6 @@ public class Main {
 					String bodyClass = link.getElementsByTagName("ownedComment").item(0).getTextContent();
 
 					if(!(bodyClass.indexOf("(name") == -1 || bodyClass.contains("fetch"))) {
-						//System.out.println(body);
-						//System.out.println("\t nameIndex: "+body.indexOf("(name"));
 						int beginClass = bodyClass.indexOf('"',bodyClass.indexOf("(name"));
 						int endClass = bodyClass.indexOf('"',beginClass+1);
 						String className = bodyClass.substring(beginClass+1,endClass);
@@ -99,8 +95,6 @@ public class Main {
 
 									if(body.indexOf("(name") == -1) break; // Not column name but fetch rows.
 									if(body.contains("fetch")) break;
-									//System.out.println(body);
-									//System.out.println("\t nameIndex: "+body.indexOf("(name"));
 									int begin = body.indexOf('"',body.indexOf("(name"));
 									int end = body.indexOf('"',begin+1);
 									String columnName = body.substring(begin+1,end);
@@ -163,21 +157,6 @@ public class Main {
 
 				}
 			}
-			/*
-			listAttributes = doc.getElementsByTagName(ATTRIBUTES);
-			int totalAttributes = listAttributes.getLength();
-			System.out.println("Attribute:"+totalAttributes);
-
-
-			NodeList linksAtributesHiding = doc.getElementsByTagName(ATTRIBUTES);
-			for (int i = 0; i < linksAtributesHiding.getLength(); i++) {
-
-				Element link = (Element) linksAtributesHiding.item(i);
-
-				System.out.println("Attribute= " + link.getAttribute("name"));
-
-			}
-			 */
 
 		} catch (SAXParseException err) {
 			System.out.println("** Parsing error" + ", line "
@@ -194,54 +173,8 @@ public class Main {
 
 	}
 
-	public static void test() {
-		String url = "jdbc:mysql://relational.fit.cvut.cz:3306/tpcd";
-		String username = "guest";
-		String password = "relational";
-		Connection myConn=null;
-		Statement myStmt = null;
-		ResultSet myRs= null;
-		try
-		{
-			myConn = DriverManager.getConnection(url, username, password);
-			myStmt= myConn.createStatement();
-			String sql= "Select n_nationkey,n_name,n_comment from dss_nation";
-			myRs = myStmt.executeQuery(sql);
-			JSONArray jArray = new JSONArray();
-			while (myRs.next())
-			{
-				String key_json = myRs.getString("n_nationkey");
-				String  name_json = myRs.getString("n_name");
-				String comment_json = myRs.getString("n_comment");
-				//String id_json=result.getString("demo");
-				JSONObject jObj = new JSONObject();
-				jObj.put("id", key_json);
-				jObj.put("name", name_json);
-				jObj.put("comment", comment_json);
-				//jObj.put("name", name_json);
-				jArray.put(jObj);
-			}
-			System.out.println("============ Array ==============");
-			try (FileWriter file = new FileWriter("C:/Users/Ilyess/Desktop/nation.json")) {
-
-				file.write(jArray.toString());
-				file.flush();
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			System.out.println("============ END ==============");
-
-		}
-		catch(Exception e)
-		{
-			System.out.println(e);
-		}
-	}
-
 	public static void main(String[] args) {
 		function();
-		//test();
 	}
 
 }
