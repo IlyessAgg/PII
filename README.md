@@ -1,6 +1,5 @@
-# PII
-## Objective
-Read XMI file and use the informations to transfer data from SQL to MongoDB.
+# SQL to NoSQL migration
+> Transfer your data from SQL to MongoDB.
 
 ## Progress
 In-development.
