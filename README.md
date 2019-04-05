@@ -8,4 +8,15 @@ This project aims at helping research in the automation of the migration of a re
 
 
 ## Progress
-In-development.
+Done :
+- Extraction into Java clases
+- Modelio import
+- XMI reading
+- JSON creation and import
+
+To Do :
+- Extract the metadata
+- Improve JSON creation (storing rows into a single JSONArray is not a good solution)
+- Fetch foreign keys
+
+## Issues
