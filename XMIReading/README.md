@@ -6,5 +6,6 @@
 </p>
 
 ## How it works
-- We use a document builder to parse the XMI.  
+- We use a document builder to parse the XMI.
+
 ![XMIParsing](../source/xmireading01.png)
