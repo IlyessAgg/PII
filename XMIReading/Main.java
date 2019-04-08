@@ -52,11 +52,11 @@ public class Main {
 
 				Element link = (Element) listClass.item(i);
 
-				if(link.getAttribute("xmi:type").contains( "uml:Class")/* && link.getAttribute("name").contains("DssSupplier")*/) {
+				if(link.getAttribute("xmi:type").contains( "uml:Class")) {
 					System.out.println("Class: "+ link.getAttribute("name"));
 
 					String bodyClass = link.getElementsByTagName("ownedComment").item(0).getTextContent();
-
+					// Name of the table it originated from
 					if(!(bodyClass.indexOf("(name") == -1 || bodyClass.contains("fetch"))) {
 						int beginClass = bodyClass.indexOf('"',bodyClass.indexOf("(name"));
 						int endClass = bodyClass.indexOf('"',beginClass+1);
