@@ -33,3 +33,39 @@ What still needs to be done is to fetch data from attributes like these:
           <body>@OneToMany(fetch = FetchType.LAZY, mappedBy = &quot;dssNation&quot;)</body>
   </ownedComment>
 ```
+
+- We connect to the SQL database and request a query using the table and columns.
+```java
+myConn = DriverManager.getConnection(url, username, password);
+myStmt= myConn.createStatement();
+String sql= "Select " + columns + " from " + SQLtable;
+myRs = myStmt.executeQuery(sql);
+```
+
+- We create a JSON Object for each row and store it in a JSON Array.
+```java
+JSONArray jArray = new JSONArray();
+while (myRs.next()){
+  JSONObject jObj = new JSONObject();
+  for(String column : SQLattributes) {
+      String key_json = myRs.getString(column);
+      Obj.put(column, key_json);
+  }
+  jArray.put(jObj);
+}
+```
+
+- Then we create a JSON file.
+```java
+try (FileWriter file = new FileWriter(<fileLocation>+SQLtable+".json")) {
+  file.write(jArray.toString());
+  file.flush();
+}
+```
+
+## Result
+> Using the [**TPC-D**](https://relational.fit.cvut.cz/dataset/TPCD) Benchmark.
+
+<p align="center">
+  <img src="../source/JSONS.png" alt="UsageImage"/>
+</p>
